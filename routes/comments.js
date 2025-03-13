@@ -9,7 +9,17 @@ const comments = require('../data/comments')
 router 
     .route('/')
     .get((req, res) => {
-        res.json (comments)
+        //this is how we are going to know this is a query parameter
+        const {userId, postId} = req.query
+        //creating a copy to filter it 
+        let filteredComments = comments
+        if(userId) {
+            filteredComments = filteredComments.filter(comment => comment.userId == userId)
+        }
+        if (postId) {
+            filteredComments = filteredComments.filter(comment => comment.postId == postId)
+        }
+        res.json(filteredComments)
     })
 
     //!Step 5
